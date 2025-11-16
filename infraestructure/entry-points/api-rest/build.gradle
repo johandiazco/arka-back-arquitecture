@@ -1,0 +1,9 @@
+//única responsabilidad va a ser administrar las dependencias detodo lo que es api rest.
+dependencies {
+    implementation project(":usecase")
+    implementation project(":model")
+
+    //esta libreria es la que nos va a permitir un apirest nos permite una clase como un servicio
+    implementation ("org.springframework.boot:spring-boot-started-web")
+    implementation ("org.springframework.boot:spring-boot-starter-actuator")
+}

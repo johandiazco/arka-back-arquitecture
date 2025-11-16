@@ -1,0 +1,8 @@
+//única responsabilidad va a ser administrar las dependencias detodo lo que es api rest.
+dependencies {
+    implementation project(":usecase")
+    implementation project(":model")
+
+    //este no va a tener las dependencias de spring, si no que las de JPA
+
+}
