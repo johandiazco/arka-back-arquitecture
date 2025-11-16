@@ -6,4 +6,10 @@ dependencies {
     //esta libreria es la que nos va a permitir un apirest nos permite una clase como un servicio
     implementation ("org.springframework.boot:spring-boot-started-web")
     implementation ("org.springframework.boot:spring-boot-starter-actuator")
+    //usamos el de oracle que es mejor par programin funcional y es mas liviano
+    implementation ("org.springframework.boot:spring-boot-starter-undertow")
+}
+
+configurations {
+    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
 }

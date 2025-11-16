@@ -1,0 +1,7 @@
+apply plugin: 'org.springframework.boot'
+dependencies {
+    implementation project(":api-rest")
+    implementation project(":usecase")
+    implementation project(":model")
+    implementation project(":jpa-repository")
+}

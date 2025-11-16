@@ -1,19 +1,28 @@
-rootProject.name = 'arka-back-project'
-
 pluginManagement {
     repositories {
-        mavenCentral()
+        gradlePluginPortal()
     }
 }
 
+rootProject.name = 'arka-back-project'
+
+
 //cada vez que creemos un adaptador debemos hacer esto
-include(":api-rest")
-include(":jpa-repository")
-include(":usecase")
-include(":model")
+//include(":api-rest")
+//include(":jpa-repository")
+//include(":usecase")
+//include(":model")
+include(":app-service",
+        ":api-rest",
+        ":jpa-repository",
+        ":usecase",
+        ":model")
 
 //aca le decimos donde estan ubicados
+project(":app-service").projectDir = file("./application/app-service")
+
 project(":api-rest").projectDir = file("./infraestructure/entry-points/api-rest")
 project(":jpa-repository").projectDir = file("./infraestructure/driven-adapters/jpa-repository")
+
 project(":usecase").projectDir = file("./domain/usecase")
 project(":model").projectDir = file("./domain/model")
