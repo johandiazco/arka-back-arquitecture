@@ -1,4 +1,4 @@
-package com.arkaback.arkabackproject;
+package com.arkaback;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

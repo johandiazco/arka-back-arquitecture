@@ -12,17 +12,21 @@ rootProject.name = 'arka-back-project'
 //include(":jpa-repository")
 //include(":usecase")
 //include(":model")
-include(":app-service",
+include(":http-client",
+        ":app-service",
         ":api-rest",
         ":jpa-repository",
         ":usecase",
         ":model")
 
 //aca le decimos donde estan ubicados
+// este el app-service siempre sera el orquestador
 project(":app-service").projectDir = file("./application/app-service")
 
-project(":api-rest").projectDir = file("./infraestructure/entry-points/api-rest")
+project(":http-client").projectDir = file("./infraestructure/driven-adapters/http-client")
 project(":jpa-repository").projectDir = file("./infraestructure/driven-adapters/jpa-repository")
+
+project(":api-rest").projectDir = file("./infraestructure/entry-points/api-rest")
 
 project(":usecase").projectDir = file("./domain/usecase")
 project(":model").projectDir = file("./domain/model")

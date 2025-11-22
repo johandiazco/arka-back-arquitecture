@@ -1,0 +1,9 @@
+package com.arkaback.config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = "com.arkaback")
+public class UseCase {
+}

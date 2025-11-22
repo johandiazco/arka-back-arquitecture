@@ -2,6 +2,7 @@
 dependencies {
     implementation project(":usecase")
     implementation project(":model")
+    implementation platform("org.springframework.boot:spring-boot-starter-data-jpa")
 
     //este no va a tener las dependencias de spring, si no que las de JPA
 
