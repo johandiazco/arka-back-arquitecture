@@ -1,7 +1,7 @@
-package com.arka.mapper;
+package com.arkaback.mapper;
 
-import com.arka.dto.ProductCreateRequest;
-import com.arka.dto.ProductResponse;
+import com.arkaback.dto.ProductCreateRequest;
+import com.arkaback.dto.ProductResponse;
 import com.arkaback.entity.Product;
 import org.springframework.stereotype.Component;
 

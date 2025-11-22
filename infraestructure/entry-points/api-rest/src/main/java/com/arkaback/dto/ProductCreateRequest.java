@@ -1,4 +1,4 @@
-package com.arka.dto;
+package com.arkaback.dto;
 
 import com.arkaback.entity.Categorie;
 import jakarta.validation.constraints.Min;

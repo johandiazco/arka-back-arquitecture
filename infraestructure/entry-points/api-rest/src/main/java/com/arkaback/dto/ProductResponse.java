@@ -1,4 +1,4 @@
-package com.arka.dto;
+package com.arkaback.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

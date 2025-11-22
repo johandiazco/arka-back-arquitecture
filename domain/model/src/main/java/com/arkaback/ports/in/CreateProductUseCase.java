@@ -1,4 +1,9 @@
 package com.arkaback.ports.in;
 
-public class CreateProductUseCase {
+import com.arkaback.entity.Product;
+
+public interface CreateProductUseCase {
+
+    Product execute(Product product, Long warehouseId, Long supplierId);
+
 }

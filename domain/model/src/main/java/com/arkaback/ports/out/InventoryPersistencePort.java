@@ -1,4 +1,10 @@
 package com.arkaback.ports.out;
 
-public class InventoryPersistencePort {
+import com.arkaback.entity.Inventory;
+import com.arkaback.entity.Product;
+
+public interface InventoryPersistencePort {
+
+    Inventory createInitial(Product product, Long warehouseId, Long supplierId);
+
 }

@@ -1,4 +1,10 @@
 package com.arkaback.ports.out;
 
-public class ProductPersistencePort {
+import com.arkaback.entity.Product;
+
+public interface ProductPersistencePort {
+
+    Product save(Product product);
+    boolean existsBySku(String sku);
+
 }
