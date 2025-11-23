@@ -28,7 +28,7 @@ public class InventoryPersistenceMapper {
                     .price(entity.getProduct().getPrice())
                     .brand(entity.getProduct().getBrand())
                     .minStock(entity.getProduct().getMinStock())
-                    .active(entity.getProduct().getIsActive())
+                    .isActive(entity.getProduct().getIsActive())
                     .category(category)
                     .build();
         }

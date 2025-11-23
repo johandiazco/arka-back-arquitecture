@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Supplier {
 
-    private long id;
+    private Long id;
     private String name;
     private String identification;
     private String email;

@@ -27,4 +27,12 @@ public class InventoryEntity {
 
     @Column(name = "stock_available", insertable = false, updatable = false)
     private Integer stockAvailable;
+
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id", nullable = false)
+    private WarehouseEntity warehouse;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private SupplierEntity supplier;
 }

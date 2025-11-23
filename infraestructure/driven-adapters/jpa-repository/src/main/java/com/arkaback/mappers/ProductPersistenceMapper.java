@@ -27,12 +27,13 @@ public class ProductPersistenceMapper {
                 .sku(product.getSku())
                 .brand(product.getBrand())
                 .minStock(product.getMinStock())
-                .isActive(product.getActive())
+                .isActive(product.getIsActive())
                 .category(categoryEntity)
                 .build();
     }
 
     public Product toDomain(ProductEntity entity) {
+        if (entity == null) return null;
         Categorie category = null;
         if (entity.getCategory() != null) {
             category = Categorie.builder()
@@ -50,7 +51,7 @@ public class ProductPersistenceMapper {
                 .sku(entity.getSku())
                 .brand(entity.getBrand())
                 .minStock(entity.getMinStock())
-                .active(entity.getIsActive())
+                .isActive(entity.getIsActive())
                 .category(category)
                 .build();
     }

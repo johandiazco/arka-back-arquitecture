@@ -20,18 +20,18 @@ public class CreateProductUseCaseImpl implements CreateProductUseCase {
 
     @Override
     public Product execute(Product product, Long warehouseId, Long supplierId) {
-        // 1. Validar SKU duplicado
+        // Validamos SKU duplicado
         if (productPersistencePort.existsBySku(product.getSku())) {
             throw new ProductAlreadyExistsException("El SKU " + product.getSku() + " ya existe");
         }
 
-        // 2. Validar precio
-        product.validatePrice();
+        // Validamos precio
+        product.validate();
 
-        // 3. Guardar producto
+        // se Guarda producto
         Product savedProduct = productPersistencePort.save(product);
 
-        // 4. Crear inventory inicial
+        // Creamos inventory inicial
         inventoryPersistencePort.createInitial(savedProduct, warehouseId, supplierId);
 
         return savedProduct;

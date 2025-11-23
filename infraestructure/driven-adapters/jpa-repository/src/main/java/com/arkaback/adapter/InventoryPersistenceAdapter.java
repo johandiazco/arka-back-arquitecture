@@ -1,9 +1,6 @@
 package com.arkaback.adapter;
 
-import com.arkaback.entity.Inventory;
-import com.arkaback.entity.InventoryEntity;
-import com.arkaback.entity.Product;
-import com.arkaback.entity.ProductEntity;
+import com.arkaback.entity.*;
 import com.arkaback.mappers.InventoryPersistenceMapper;
 import com.arkaback.ports.out.InventoryPersistencePort;
 import com.arkaback.repository.InventoryJpaRepository;
@@ -29,20 +26,24 @@ public class InventoryPersistenceAdapter implements InventoryPersistencePort {
                 .id(product.getId())
                 .build();
 
+        WarehouseEntity warehouseEntity = WarehouseEntity.builder()
+                .id(warehouseId)
+                .build();
+
+        SupplierEntity supplierEntity = SupplierEntity.builder()
+                .id(supplierId)
+                .build();
+
         InventoryEntity inventory = InventoryEntity.builder()
                 .product(productEntity)
+                .warehouse(warehouseEntity)
+                .supplier(supplierEntity)
                 .stockActual(0)
                 .stockReserved(0)
                 .build();
 
         InventoryEntity saved = inventoryRepository.save(inventory);
-
-        return Inventory.builder()
-                .id(saved.getId())
-                .product(product)
-                .stockActual(saved.getStockActual())
-                .stockReserved(saved.getStockReserved())
-                .build();
+        return mapper.toDomain(saved);
     }
 
     @Override

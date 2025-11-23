@@ -27,9 +27,14 @@ public class ProductRestController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductCreateRequest request) {
+    public ResponseEntity<ProductResponse> create(
+            @Valid @RequestBody ProductCreateRequest request) {
         Product product = mapper.toDomain(request);
-        Product created = createProductUseCase.execute(product, request.getWarehouseId(), request.getSupplierId());
+        Product created = createProductUseCase.execute(
+                product,
+                request.getWarehouseId(),
+                request.getSupplierId()
+        );
         ProductResponse response = mapper.toResponse(created);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

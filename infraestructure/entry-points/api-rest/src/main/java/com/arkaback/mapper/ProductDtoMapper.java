@@ -16,7 +16,7 @@ public class ProductDtoMapper {
                 .sku(request.getSku())
                 .brand(request.getBrand())
                 .minStock(request.getMinStock())
-                .active(true)
+                .isActive(true)
                 .category(request.getCategory())
                 .build();
     }

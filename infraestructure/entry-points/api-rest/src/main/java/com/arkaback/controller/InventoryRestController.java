@@ -24,8 +24,8 @@ public class InventoryRestController {
 
     @PutMapping("/stock/{productId}/{warehouseId}")
     public ResponseEntity<InventoryResponse> updateStock(
-            @PathVariable Long productId,
-            @PathVariable Long warehouseId,
+            @PathVariable(name = "productId") Long productId,
+            @PathVariable(name = "warehouseId") Long warehouseId,
             @Valid @RequestBody StockUpdateRequest request) {
 
         Inventory updated = updateStockUseCase.execute(productId, warehouseId, request.getNewStock());
