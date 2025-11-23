@@ -25,4 +25,8 @@ public class WarehouseEntity {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    private WarehouseEntity warehouse;
+
 }

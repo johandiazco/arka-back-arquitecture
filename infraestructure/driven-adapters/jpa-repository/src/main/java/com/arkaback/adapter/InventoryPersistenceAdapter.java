@@ -4,17 +4,23 @@ import com.arkaback.entity.Inventory;
 import com.arkaback.entity.InventoryEntity;
 import com.arkaback.entity.Product;
 import com.arkaback.entity.ProductEntity;
+import com.arkaback.mappers.InventoryPersistenceMapper;
 import com.arkaback.ports.out.InventoryPersistencePort;
 import com.arkaback.repository.InventoryJpaRepository;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class InventoryPersistenceAdapter implements InventoryPersistencePort {
 
     private final InventoryJpaRepository inventoryRepository;
+    private final InventoryPersistenceMapper mapper;
 
-    public InventoryPersistenceAdapter(InventoryJpaRepository inventoryRepository) {
+    public InventoryPersistenceAdapter(InventoryJpaRepository inventoryRepository,
+                                       InventoryPersistenceMapper mapper) {
         this.inventoryRepository = inventoryRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -37,5 +43,28 @@ public class InventoryPersistenceAdapter implements InventoryPersistencePort {
                 .stockActual(saved.getStockActual())
                 .stockReserved(saved.getStockReserved())
                 .build();
+    }
+
+    @Override
+    public Optional<Inventory> findByProductIdAndWarehouseId(Long productId, Long warehouseId) {
+        return inventoryRepository.findByProduct_IdAndWarehouse_Id(productId, warehouseId)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Inventory update(Inventory inventory) {
+        // Buscar la entidad existente
+        InventoryEntity existingEntity = inventoryRepository.findById(inventory.getId())
+                .orElseThrow(() -> new RuntimeException("Inventory no encontrado"));
+
+        // Actualizar campos necesarios
+        existingEntity.setStockActual(inventory.getStockActual());
+        existingEntity.setStockReserved(inventory.getStockReserved());
+
+        // Guardamos
+        InventoryEntity saved = inventoryRepository.save(existingEntity);
+
+        // Retornar como dominio
+        return mapper.toDomain(saved);
     }
 }

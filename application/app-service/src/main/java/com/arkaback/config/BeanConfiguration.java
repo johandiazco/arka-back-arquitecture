@@ -1,7 +1,9 @@
 package com.arkaback.config;
 
-import com.arkaback.CreateProductUseCaseImpl;
+import com.arkaback.useCase.CreateProductUseCaseImpl;
+import com.arkaback.useCase.UpdateStockUseCaseImpl;
 import com.arkaback.ports.in.CreateProductUseCase;
+import com.arkaback.ports.in.UpdateStockUseCase;
 import com.arkaback.ports.out.InventoryPersistencePort;
 import com.arkaback.ports.out.ProductPersistencePort;
 import org.springframework.context.annotation.Bean;
@@ -17,5 +19,10 @@ public class BeanConfiguration {
             ProductPersistencePort productPersistencePort,
             InventoryPersistencePort inventoryPersistencePort) {
         return new CreateProductUseCaseImpl(productPersistencePort, inventoryPersistencePort);
+    }
+
+    @Bean
+    public UpdateStockUseCase updateStockUseCase(InventoryPersistencePort inventoryPersistencePort) {
+        return new UpdateStockUseCaseImpl(inventoryPersistencePort);
     }
 }

@@ -1,4 +1,4 @@
-package com.arkaback;
+package com.arkaback.useCase;
 
 import com.arkaback.entity.Product;
 import com.arkaback.exceptions.ProductAlreadyExistsException;
