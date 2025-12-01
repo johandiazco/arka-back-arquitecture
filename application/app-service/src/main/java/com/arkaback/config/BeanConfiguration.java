@@ -4,7 +4,7 @@ import com.arkaback.ports.input.CreateProduct;
 import com.arkaback.ports.input.UpdateStock;
 import com.arkaback.useCase.Product.CreateProductUseCase;
 import com.arkaback.useCase.Product.GetAllProductsUseCase;
-import com.arkaback.useCase.UpdateStockUseCase;
+import com.arkaback.useCase.Stock.UpdateStockUseCase;
 import com.arkaback.ports.output.InventoryPersistencePort;
 import com.arkaback.ports.output.ProductPersistencePort;
 import org.springframework.context.annotation.Bean;

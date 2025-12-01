@@ -8,6 +8,7 @@ import com.arkaback.repository.ProductJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ProductPersistenceAdapter implements ProductPersistencePort{
@@ -40,4 +41,11 @@ public class ProductPersistenceAdapter implements ProductPersistencePort{
                 .map(productEntityMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return productJpaRepository.findById(id)
+                .map(productEntityMapper::toDomain);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.arkaback.useCase;
+package com.arkaback.useCase.Stock;
 
 import com.arkaback.entity.Inventory;
 import com.arkaback.exceptions.InvalidStockException;
