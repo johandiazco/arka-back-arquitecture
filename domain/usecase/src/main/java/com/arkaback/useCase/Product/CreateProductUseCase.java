@@ -1,7 +1,8 @@
-package com.arkaback.useCase;
+package com.arkaback.useCase.Product;
 
 import com.arkaback.entity.Product;
 import com.arkaback.exceptions.ProductAlreadyExistsException;
+import com.arkaback.ports.input.CreateProduct;
 import com.arkaback.ports.output.InventoryPersistencePort;
 import com.arkaback.ports.output.ProductPersistencePort;
 import jakarta.transaction.Transactional;
@@ -9,7 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @AllArgsConstructor
-public class CreateProductUseCase implements com.arkaback.ports.input.CreateProductUseCase {
+public class CreateProductUseCase implements CreateProduct {
 
     private final ProductPersistencePort productPersistencePort;
     private final InventoryPersistencePort inventoryPersistencePort;
