@@ -4,23 +4,19 @@ import com.arkaback.dto.InventoryResponse;
 import com.arkaback.dto.StockUpdateRequest;
 import com.arkaback.entity.Inventory;
 import com.arkaback.mapper.InventoryDtoMapper;
-import com.arkaback.ports.in.UpdateStockUseCase;
+import com.arkaback.ports.input.UpdateStockUseCase;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/inventory")
 public class InventoryRestController {
 
     private final UpdateStockUseCase updateStockUseCase;
     private final InventoryDtoMapper mapper;
-
-    public InventoryRestController(UpdateStockUseCase updateStockUseCase,
-                                   InventoryDtoMapper mapper) {
-        this.updateStockUseCase = updateStockUseCase;
-        this.mapper = mapper;
-    }
 
     @PutMapping("/stock/{productId}/{warehouseId}")
     public ResponseEntity<InventoryResponse> updateStock(

@@ -3,7 +3,7 @@ package com.arkaback.adapter;
 import com.arkaback.entity.Product;
 import com.arkaback.entity.ProductEntity;
 import com.arkaback.mappers.ProductPersistenceMapper;
-import com.arkaback.ports.out.ProductPersistencePort;
+import com.arkaback.ports.output.ProductPersistencePort;
 import com.arkaback.repository.ProductJpaRepository;
 import org.springframework.stereotype.Component;
 

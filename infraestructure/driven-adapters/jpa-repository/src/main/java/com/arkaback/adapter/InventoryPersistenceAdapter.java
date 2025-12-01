@@ -2,7 +2,7 @@ package com.arkaback.adapter;
 
 import com.arkaback.entity.*;
 import com.arkaback.mappers.InventoryPersistenceMapper;
-import com.arkaback.ports.out.InventoryPersistencePort;
+import com.arkaback.ports.output.InventoryPersistencePort;
 import com.arkaback.repository.InventoryJpaRepository;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package com.arkaback.mappers;
 
-import com.arkaback.entity.Categorie;
+import com.arkaback.entity.Category;
 import com.arkaback.entity.Inventory;
 import com.arkaback.entity.InventoryEntity;
 import com.arkaback.entity.Product;
@@ -12,9 +12,9 @@ public class InventoryPersistenceMapper {
     public Inventory toDomain(InventoryEntity entity) {
         Product product = null;
         if (entity.getProduct() != null) {
-            Categorie category = null;
+            Category category = null;
             if (entity.getProduct().getCategory() != null) {
-                category = Categorie.builder()
+                category = Category.builder()
                         .id(entity.getProduct().getCategory().getId())
                         .name(entity.getProduct().getCategory().getName())
                         .description(entity.getProduct().getCategory().getDescription())

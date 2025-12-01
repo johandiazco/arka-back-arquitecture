@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categorie {
+public class Category {
     private Long id;
     private String name;
     private String description;

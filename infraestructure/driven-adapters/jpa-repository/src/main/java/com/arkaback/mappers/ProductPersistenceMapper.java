@@ -1,7 +1,7 @@
 package com.arkaback.mappers;
 
-import com.arkaback.entity.Categorie;
-import com.arkaback.entity.CategorieEntity;
+import com.arkaback.entity.Category;
+import com.arkaback.entity.CategoryEntity;
 import com.arkaback.entity.Product;
 import com.arkaback.entity.ProductEntity;
 import org.springframework.stereotype.Component;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 public class ProductPersistenceMapper {
 
     public ProductEntity toEntity(Product product) {
-        CategorieEntity categoryEntity = null;
+        CategoryEntity categoryEntity = null;
         if (product.getCategory() != null) {
-            categoryEntity = CategorieEntity.builder()
+            categoryEntity = CategoryEntity.builder()
                     .id(product.getCategory().getId())
                     .name(product.getCategory().getName())
                     .description(product.getCategory().getDescription())
@@ -34,9 +34,9 @@ public class ProductPersistenceMapper {
 
     public Product toDomain(ProductEntity entity) {
         if (entity == null) return null;
-        Categorie category = null;
+        Category category = null;
         if (entity.getCategory() != null) {
-            category = Categorie.builder()
+            category = Category.builder()
                     .id(entity.getCategory().getId())
                     .name(entity.getCategory().getName())
                     .description(entity.getCategory().getDescription())

@@ -21,7 +21,7 @@ public class ProductEntity {
     private String description;
     private BigDecimal price;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "sku", nullable = false, unique = true)
     private String sku;
 
     private String brand;
@@ -34,6 +34,6 @@ public class ProductEntity {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private CategorieEntity category;
+    private CategoryEntity category;
 
 }

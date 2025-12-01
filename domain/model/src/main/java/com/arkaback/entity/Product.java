@@ -18,7 +18,7 @@ public class Product {
     private String brand;
     private Integer minStock;
     private Boolean isActive;
-    private Categorie category;
+    private Category category;
 
     public void validatePrice() {
         if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {

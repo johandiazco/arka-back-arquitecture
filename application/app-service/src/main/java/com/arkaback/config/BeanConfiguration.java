@@ -1,11 +1,9 @@
 package com.arkaback.config;
 
-import com.arkaback.useCase.CreateProductUseCaseImpl;
-import com.arkaback.useCase.UpdateStockUseCaseImpl;
-import com.arkaback.ports.in.CreateProductUseCase;
-import com.arkaback.ports.in.UpdateStockUseCase;
-import com.arkaback.ports.out.InventoryPersistencePort;
-import com.arkaback.ports.out.ProductPersistencePort;
+import com.arkaback.useCase.CreateProductUseCase;
+import com.arkaback.useCase.UpdateStockUseCase;
+import com.arkaback.ports.output.InventoryPersistencePort;
+import com.arkaback.ports.output.ProductPersistencePort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,14 +13,14 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    public CreateProductUseCase createProductUseCase(
+    public com.arkaback.ports.input.CreateProductUseCase createProductUseCase(
             ProductPersistencePort productPersistencePort,
             InventoryPersistencePort inventoryPersistencePort) {
-        return new CreateProductUseCaseImpl(productPersistencePort, inventoryPersistencePort);
+        return new CreateProductUseCase(productPersistencePort, inventoryPersistencePort);
     }
 
     @Bean
-    public UpdateStockUseCase updateStockUseCase(InventoryPersistencePort inventoryPersistencePort) {
-        return new UpdateStockUseCaseImpl(inventoryPersistencePort);
+    public com.arkaback.ports.input.UpdateStockUseCase updateStockUseCase(InventoryPersistencePort inventoryPersistencePort) {
+        return new UpdateStockUseCase(inventoryPersistencePort);
     }
 }

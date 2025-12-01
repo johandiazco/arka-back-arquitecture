@@ -1,4 +1,4 @@
-package com.arkaback.ports.in;
+package com.arkaback.ports.input;
 
 import com.arkaback.entity.Product;
 

@@ -3,13 +3,12 @@ package com.arkaback.useCase;
 import com.arkaback.entity.Inventory;
 import com.arkaback.exceptions.InvalidStockException;
 import com.arkaback.exceptions.InventoryNotFoundException;
-import com.arkaback.ports.in.UpdateStockUseCase;
-import com.arkaback.ports.out.InventoryPersistencePort;
+import com.arkaback.ports.output.InventoryPersistencePort;
 
-public class UpdateStockUseCaseImpl implements UpdateStockUseCase {
+public class UpdateStockUseCase implements com.arkaback.ports.input.UpdateStockUseCase {
     private final InventoryPersistencePort inventoryPersistencePort;
 
-    public UpdateStockUseCaseImpl(InventoryPersistencePort inventoryPersistencePort) {
+    public UpdateStockUseCase(InventoryPersistencePort inventoryPersistencePort) {
         this.inventoryPersistencePort = inventoryPersistencePort;
     }
 
