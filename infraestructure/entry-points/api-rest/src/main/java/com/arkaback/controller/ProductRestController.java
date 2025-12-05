@@ -65,7 +65,9 @@ public class ProductRestController {
             @PathVariable Long id,
             @RequestBody ProductUpdateRequest request) {
 
-        return updateProduct.update(id, request)
+        Product product = mapper.requestToDomain(request);
+
+        return updateProduct.update(id, product)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

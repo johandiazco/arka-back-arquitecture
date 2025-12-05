@@ -5,12 +5,10 @@ import com.arkaback.entity.Product;
 import com.arkaback.ports.input.ListProduct;
 import com.arkaback.ports.output.ProductPersistencePort;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @AllArgsConstructor
-@Component
 public class GetAllProductsUseCase implements ListProduct {
 
     private final ProductPersistencePort productPersistencePort;

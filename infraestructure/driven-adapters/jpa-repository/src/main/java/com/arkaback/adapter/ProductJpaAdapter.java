@@ -5,6 +5,7 @@ import com.arkaback.entity.ProductEntity;
 import com.arkaback.mappers.ProductPersistenceMapper;
 import com.arkaback.ports.output.ProductPersistencePort;
 import com.arkaback.repository.ProductJpaRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -18,6 +19,7 @@ public class ProductJpaAdapter implements ProductPersistencePort{
     private final ProductPersistenceMapper productEntityMapper;
 
     @Override
+    @Transactional
     public Product save(Product product) {
         ProductEntity entity = productEntityMapper.toEntity(product);
         ProductEntity saved = productJpaRepository.save(entity);
@@ -25,11 +27,13 @@ public class ProductJpaAdapter implements ProductPersistencePort{
     }
 
     @Override
+    @Transactional
     public boolean existsBySku(String sku) {
         return productJpaRepository.existsBySku(sku);
     }
 
     @Override
+    @Transactional
     public List<Product> findAll() {
         return productJpaRepository.findAll()
                 .stream()
@@ -38,12 +42,14 @@ public class ProductJpaAdapter implements ProductPersistencePort{
     }
 
     @Override
+    @Transactional
     public Optional<Product> findById(Long id) {
         return productJpaRepository.findById(id)
                 .map(productEntityMapper::toDomain);
     }
 
     @Override
+    @Transactional
     public Optional<Product> updateById(Long id, Product product) {
         return productJpaRepository.findById(id)
                 .map(entity -> {
@@ -54,6 +60,7 @@ public class ProductJpaAdapter implements ProductPersistencePort{
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         productJpaRepository.deleteById(id);
     }

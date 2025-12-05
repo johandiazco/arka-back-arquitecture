@@ -2,6 +2,7 @@ package com.arkaback.mapper;
 
 import com.arkaback.dto.ProductCreateRequest;
 import com.arkaback.dto.ProductResponse;
+import com.arkaback.dto.ProductUpdateRequest;
 import com.arkaback.entity.Product;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,19 @@ public class ProductDtoMapper {
                 .brand(product.getBrand())
                 .minStock(product.getMinStock())
                 .categoryName(product.getCategory() != null ? product.getCategory().getName() : null)
+                .build();
+    }
+
+    public Product requestToDomain(ProductUpdateRequest request) {
+        return Product.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .price(request.getPrice())
+                .sku(request.getSku())
+                .brand(request.getBrand())
+                .minStock(request.getMinStock())
+                .isActive(request.getIsActive())
+                // categoryId lo manejas después con el repositorio si es necesario
                 .build();
     }
 }

@@ -17,5 +17,7 @@ public class ProductResponse {
     private String sku;
     private String brand;
     private Integer minStock;
+    private Boolean isActive;
+    private Long categoryId;
     private String categoryName;
 }

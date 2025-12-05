@@ -11,7 +11,7 @@ public interface ProductPersistencePort {
     boolean existsBySku(String sku);
     List<Product> findAll();
     Optional<Product> findById(Long id);
-    Product updateById(Long id, Product product);
+    Optional<Product> updateById(Long id, Product product);
     void deleteById(Long id);
 
 

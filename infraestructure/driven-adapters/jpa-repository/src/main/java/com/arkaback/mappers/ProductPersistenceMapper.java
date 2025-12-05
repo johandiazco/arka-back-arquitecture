@@ -56,17 +56,6 @@ public class ProductPersistenceMapper {
                 .build();
     }
 
-    public void updateDomainFromRequest(ProductUpdateRequest request, Product product) {
-        if (request.getName() != null) product.setName(request.getName());
-        if (request.getDescription() != null) product.setDescription(request.getDescription());
-        if (request.getPrice() != null) product.setPrice(request.getPrice());
-        if (request.getSku() != null) product.setSku(request.getSku());
-        if (request.getBrand() != null) product.setBrand(request.getBrand());
-        if (request.getMinStock() != null) product.setMinStock(request.getMinStock());
-        if (request.getIsActive() != null) product.setIsActive(request.getIsActive());
-        // categoryId handling: you'd lookup category entity in persistence if needed
-    }
-
     public ProductEntity updateEntityFromDomain(Product domain, ProductEntity entity) {
         entity.setName(domain.getName());
         entity.setDescription(domain.getDescription());
@@ -75,7 +64,6 @@ public class ProductPersistenceMapper {
         entity.setBrand(domain.getBrand());
         entity.setMinStock(domain.getMinStock());
         entity.setIsActive(domain.getIsActive());
-        // do not change id
         return entity;
     }
 
