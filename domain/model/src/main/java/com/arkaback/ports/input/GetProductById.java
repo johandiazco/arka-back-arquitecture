@@ -4,6 +4,6 @@ import com.arkaback.entity.Product;
 
 import java.util.Optional;
 
-public interface GetIdProduct {
+public interface GetProductById {
     Optional<Product> getById(Long id);
 }

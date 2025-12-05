@@ -4,6 +4,6 @@ import com.arkaback.entity.Product;
 
 public interface CreateProduct {
 
-    Product execute(Product product, Long warehouseId, Long supplierId);
+    Product create(Product product, Long warehouseId, Long supplierId);
 
 }

@@ -17,7 +17,7 @@ public class CreateProductUseCase implements CreateProduct {
 
     @Override
     @Transactional
-    public Product execute(Product product, Long warehouseId, Long supplierId) {
+    public Product create(Product product, Long warehouseId, Long supplierId) {
 
         product.validate();
 

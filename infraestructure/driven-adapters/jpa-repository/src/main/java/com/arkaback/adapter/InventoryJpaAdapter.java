@@ -4,21 +4,17 @@ import com.arkaback.entity.*;
 import com.arkaback.mappers.InventoryPersistenceMapper;
 import com.arkaback.ports.output.InventoryPersistencePort;
 import com.arkaback.repository.InventoryJpaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
-public class InventoryPersistenceAdapter implements InventoryPersistencePort {
+@AllArgsConstructor
+public class InventoryJpaAdapter implements InventoryPersistencePort {
 
     private final InventoryJpaRepository inventoryRepository;
     private final InventoryPersistenceMapper mapper;
-
-    public InventoryPersistenceAdapter(InventoryJpaRepository inventoryRepository,
-                                       InventoryPersistenceMapper mapper) {
-        this.inventoryRepository = inventoryRepository;
-        this.mapper = mapper;
-    }
 
     @Override
     public Inventory createInitial(Product product, Long warehouseId, Long supplierId) {

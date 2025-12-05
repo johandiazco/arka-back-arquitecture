@@ -5,22 +5,17 @@ import com.arkaback.entity.ProductEntity;
 import com.arkaback.mappers.ProductPersistenceMapper;
 import com.arkaback.ports.output.ProductPersistencePort;
 import com.arkaback.repository.ProductJpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ProductPersistenceAdapter implements ProductPersistencePort{
+@RequiredArgsConstructor
+public class ProductJpaAdapter implements ProductPersistencePort{
 
     private final ProductJpaRepository productJpaRepository;
     private final ProductPersistenceMapper productEntityMapper;
-
-    public ProductPersistenceAdapter(ProductJpaRepository productJpaRepository,
-                                     ProductPersistenceMapper productEntityMapper) {
-        this.productJpaRepository = productJpaRepository;
-        this.productEntityMapper = productEntityMapper;
-    }
 
     @Override
     public Product save(Product product) {
@@ -47,5 +42,21 @@ public class ProductPersistenceAdapter implements ProductPersistencePort{
         return productJpaRepository.findById(id)
                 .map(productEntityMapper::toDomain);
     }
+
+    @Override
+    public Optional<Product> updateById(Long id, Product product) {
+        return productJpaRepository.findById(id)
+                .map(entity -> {
+                    ProductEntity updated = productEntityMapper.updateEntityFromDomain(product, entity);
+                    ProductEntity saved = productJpaRepository.save(updated);
+                    return productEntityMapper.toDomain(saved);
+                });
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        productJpaRepository.deleteById(id);
+    }
+
 
 }

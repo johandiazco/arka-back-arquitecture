@@ -1,21 +1,17 @@
 package com.arkaback.dto;
 
-import com.arkaback.entity.Category;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
 import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ProductCreateRequest {
-
+public class ProductUpdateRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String name;
 
@@ -29,16 +25,8 @@ public class ProductCreateRequest {
     private String sku;
 
     private String brand;
-
-    @Min(value = 0, message = "El stock mínimo no puede ser negativo")
     private Integer minStock;
+    private Boolean isActive;
+    private Long categoryId;
 
-    @NotNull(message = "La categoría es obligatoria")
-    private Category category;
-
-    @NotNull(message = "El warehouseId es obligatorio")
-    private Long warehouseId;
-
-    @NotNull(message = "El supplierId es obligatorio")
-    private Long supplierId;
 }
