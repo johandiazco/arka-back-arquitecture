@@ -1,6 +1,5 @@
 package com.arkaback.config;
 
-import com.arkaback.handler.*;
 import com.arkaback.ports.input.*;
 import com.arkaback.useCase.Product.*;
 import com.arkaback.useCase.Stock.UpdateStockUseCase;

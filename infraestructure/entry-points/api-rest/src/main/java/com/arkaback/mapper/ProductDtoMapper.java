@@ -31,6 +31,8 @@ public class ProductDtoMapper {
                 .sku(product.getSku())
                 .brand(product.getBrand())
                 .minStock(product.getMinStock())
+                .isActive(product.getIsActive())
+                .categoryId(product.getCategory() != null ? product.getCategory().getId() : null)
                 .categoryName(product.getCategory() != null ? product.getCategory().getName() : null)
                 .build();
     }
@@ -44,7 +46,6 @@ public class ProductDtoMapper {
                 .brand(request.getBrand())
                 .minStock(request.getMinStock())
                 .isActive(request.getIsActive())
-                // categoryId lo manejas después con el repositorio si es necesario
                 .build();
     }
 }

@@ -5,14 +5,8 @@ import com.arkaback.dto.ProductResponse;
 import com.arkaback.dto.ProductUpdateRequest;
 import com.arkaback.mapper.ProductDtoMapper;
 import com.arkaback.entity.Product;
-import com.arkaback.ports.input.CreateProduct;
-import com.arkaback.ports.input.DeleteProduct;
-import com.arkaback.ports.input.ListProduct;
-import com.arkaback.ports.input.UpdateProduct;
-import com.arkaback.useCase.Product.GetAllProductsUseCase;
-import com.arkaback.useCase.Product.GetIdProductUseCase;
+import com.arkaback.ports.input.*;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,27 +18,25 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductRestController {
 
+    // ✅ Solo interfaces (puertos)
     private final CreateProduct createProduct;
-    private final ProductDtoMapper mapper;
-    private final GetAllProductsUseCase getAllProductsUseCase;
-    private final GetIdProductUseCase getIdProductUseCase;
-    private final UpdateProduct updateProduct;
     private final ListProduct listProduct;
+    private final GetProductById getProductById;
+    private final UpdateProduct updateProduct;
     private final DeleteProduct deleteProduct;
+    private final ProductDtoMapper mapper;
 
     //Crear Producto
     @PostMapping("/create")
-    public ResponseEntity<ProductResponse> create(
-            @Valid @RequestBody ProductCreateRequest request) {
+    public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductCreateRequest request) {
         Product product = mapper.toDomain(request);
         Product created = createProduct.create(product, request.getWarehouseId(), request.getSupplierId());
-        ProductResponse response = mapper.toResponse(created);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(created));
     }
 
     //Listar productos
     @GetMapping("/productsAll")
-    public ResponseEntity<List<ProductResponse>> getAlll() {
+    public ResponseEntity<List<ProductResponse>> getAll() {
         List<Product> products = listProduct.getAll();
         return ResponseEntity.ok(products.stream().map(mapper::toResponse).toList());
     }
@@ -52,8 +44,7 @@ public class ProductRestController {
     //Obtener productor por id
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductResponse> getById(@PathVariable Long id) {
-
-        return getIdProductUseCase.getById(id)
+        return getProductById.getById(id)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -63,16 +54,13 @@ public class ProductRestController {
     @PutMapping("/products/{id}")
     public ResponseEntity<ProductResponse> updateProduct(
             @PathVariable Long id,
-            @RequestBody ProductUpdateRequest request) {
-
+            @Valid @RequestBody ProductUpdateRequest request) {
         Product product = mapper.requestToDomain(request);
-
         return updateProduct.update(id, product)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 
     //Eliminar producto por id
     @DeleteMapping("/products/{id}")
@@ -80,8 +68,6 @@ public class ProductRestController {
         deleteProduct.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }
 
     /*
