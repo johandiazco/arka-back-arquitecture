@@ -13,36 +13,35 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.arkaback")
 public class BeanConfiguration {
 
-    @Bean
-    public CreateProduct createProductUseCase(
-            ProductPersistencePort productPersistencePort,
-            InventoryPersistencePort inventoryPersistencePort) {
-        return new CreateProductUseCase(productPersistencePort, inventoryPersistencePort);
-    }
+        @Bean
+        public CreateProduct createProductUseCase(
+                ProductPersistencePort productPersistencePort,
+                InventoryPersistencePort inventoryPersistencePort) {
+            return new CreateProductUseCase(productPersistencePort, inventoryPersistencePort);
+        }
 
-    @Bean
-    public UpdateStock updateStockUseCase(InventoryPersistencePort inventoryPersistencePort) {
-        return new UpdateStockUseCase(inventoryPersistencePort);
-    }
+        @Bean
+        public UpdateStock updateStockUseCase(InventoryPersistencePort inventoryPersistencePort) {
+            return new UpdateStockUseCase(inventoryPersistencePort);
+        }
 
-    @Bean
-    public ListProduct getAllProductsUseCase(ProductPersistencePort productPersistencePort) {
-        return new GetAllProductsUseCase(productPersistencePort);
-    }
+        @Bean
+        public ListProduct listProductUseCase(ProductPersistencePort productPersistencePort) {
+            return new GetAllProductsUseCase(productPersistencePort);
+        }
 
-    @Bean
-    public GetProductById getProductByIdUseCase(ProductPersistencePort productPersistencePort) {
-        return new GetIdProductUseCase(productPersistencePort);
-    }
+        @Bean
+        public GetProductById getProductByIdUseCase(ProductPersistencePort productPersistencePort) {
+            return new GetIdProductUseCase(productPersistencePort);
+        }
 
-    @Bean
-    public UpdateProduct updateProductUseCase(ProductPersistencePort productPersistencePort) {
-        return new UpdateProductUseCase(productPersistencePort);
-    }
+        @Bean
+        public UpdateProduct updateProductUseCase(ProductPersistencePort productPersistencePort) {
+            return new UpdateProductUseCase(productPersistencePort);
+        }
 
-    @Bean
-    public DeleteProduct deleteProductUseCase(ProductPersistencePort productPersistencePort) {
-        return new DeleteProductUseCase(productPersistencePort);
-    }
-
+        @Bean
+        public DeleteProduct deleteProductUseCase(ProductPersistencePort productPersistencePort) {
+            return new DeleteProductUseCase(productPersistencePort);
+        }
 }

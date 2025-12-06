@@ -40,7 +40,7 @@ public class ProductRestController {
         return ResponseEntity.ok(products.stream().map(mapper::toResponse).toList());
     }
 
-    //Obtener productor por id
+    //Obtener producto por id
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductResponse> getById(@PathVariable Long id) {
         return getProductById.getById(id)
