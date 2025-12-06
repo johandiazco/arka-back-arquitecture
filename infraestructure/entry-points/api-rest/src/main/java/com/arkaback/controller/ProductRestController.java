@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductRestController {
 
-    // ✅ Solo interfaces (puertos)
     private final CreateProduct createProduct;
     private final ListProduct listProduct;
     private final GetProductById getProductById;
