@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-public class GetLowStockProductsUseCase implements GetLowStockProduct {
+public class GetLowStockProductUseCase implements GetLowStockProduct {
 
     private final InventoryPersistencePort persistencePort;
 
