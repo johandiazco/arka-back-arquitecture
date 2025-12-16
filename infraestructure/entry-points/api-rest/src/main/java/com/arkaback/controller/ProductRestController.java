@@ -41,7 +41,7 @@ public class ProductRestController {
     }
 
     //Obtener producto por id
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getById(@PathVariable Long id) {
         return getProductById.getById(id)
                 .map(mapper::toResponse)
@@ -50,7 +50,7 @@ public class ProductRestController {
     }
 
     //Actualizar producto
-    @PutMapping("/products/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ProductResponse> updateProduct(
             @PathVariable Long id,
             @Valid @RequestBody ProductUpdateRequest request) {
@@ -62,7 +62,7 @@ public class ProductRestController {
     }
 
     //Eliminar producto por id
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         deleteProduct.delete(id);
         return ResponseEntity.noContent().build();
@@ -70,7 +70,6 @@ public class ProductRestController {
 }
 
     /*
-    GET /api/inventory/low-stock - Productos con bajo stock (HU3)
     GET /api/products?category={id}&brand={name} - Búsqueda con filtros
      */
 

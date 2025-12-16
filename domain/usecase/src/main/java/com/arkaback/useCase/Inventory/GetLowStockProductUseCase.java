@@ -1,4 +1,4 @@
-package com.arkaback.useCase.Product;
+package com.arkaback.useCase.Inventory;
 
 import com.arkaback.entity.Inventory;
 import com.arkaback.ports.input.GetLowStockProduct;

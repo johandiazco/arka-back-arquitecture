@@ -3,6 +3,7 @@ package com.arkaback.ports.output;
 import com.arkaback.entity.Inventory;
 import com.arkaback.entity.Product;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface InventoryPersistencePort {
@@ -11,5 +12,6 @@ public interface InventoryPersistencePort {
 
     Optional<Inventory> findByProductIdAndWarehouseId(Long productId, Long warehouseId);
     Inventory update(Inventory inventory);
+    List<Inventory> findByStockActualLessThan(Integer threshold);
 
 }

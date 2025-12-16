@@ -7,6 +7,7 @@ import com.arkaback.repository.InventoryJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -63,5 +64,13 @@ public class InventoryJpaAdapter implements InventoryPersistencePort {
 
         // Retornar como dominio
         return mapper.toDomain(saved);
+    }
+
+    @Override
+    public List<Inventory> findByStockActualLessThan(Integer threshold) {
+        return inventoryRepository.findByStockActualLessThan(threshold)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }

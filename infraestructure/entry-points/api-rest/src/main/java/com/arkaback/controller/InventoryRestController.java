@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.arkaback.ports.input.GetLowStockProduct;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -17,7 +19,9 @@ public class InventoryRestController {
 
     private final UpdateStock updateStockUseCase;
     private final InventoryDtoMapper mapper;
+    private final GetLowStockProduct getLowStockProduct;
 
+    //Actualizar stock
     @PutMapping("/stock/{productId}/{warehouseId}")
     public ResponseEntity<InventoryResponse> updateStock(
             @PathVariable(name = "productId") Long productId,
@@ -28,4 +32,14 @@ public class InventoryRestController {
         InventoryResponse response = mapper.toResponse(updated);
         return ResponseEntity.ok(response);
     }
+
+    //Stock bajo
+    @GetMapping("/low-stock")
+    public ResponseEntity<List<InventoryResponse>> getLowStock(
+            @RequestParam(defaultValue = "10") Integer threshold) {
+
+        List<Inventory> inventories = getLowStockProduct.execute(threshold);
+        return ResponseEntity.ok(inventories.stream().map(mapper::toResponse).toList());
+    }
+
 }
