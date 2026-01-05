@@ -1,6 +1,6 @@
 package com.arkaback.useCase.Product;
 
-import com.arkaback.ports.input.DeleteProduct;
+import com.arkaback.ports.input.Product.DeleteProduct;
 import com.arkaback.ports.output.ProductPersistencePort;
 import lombok.AllArgsConstructor;
 

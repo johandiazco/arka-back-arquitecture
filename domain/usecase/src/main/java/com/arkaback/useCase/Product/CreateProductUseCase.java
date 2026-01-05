@@ -2,7 +2,7 @@ package com.arkaback.useCase.Product;
 
 import com.arkaback.entity.Product;
 import com.arkaback.exceptions.ProductAlreadyExistsException;
-import com.arkaback.ports.input.CreateProduct;
+import com.arkaback.ports.input.Product.CreateProduct;
 import com.arkaback.ports.output.InventoryPersistencePort;
 import com.arkaback.ports.output.ProductPersistencePort;
 import lombok.AllArgsConstructor;

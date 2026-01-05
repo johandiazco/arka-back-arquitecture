@@ -1,7 +1,7 @@
 package com.arkaback.useCase.Product;
 
 import com.arkaback.entity.Product;
-import com.arkaback.ports.input.UpdateProduct;
+import com.arkaback.ports.input.Product.UpdateProduct;
 import com.arkaback.ports.output.ProductPersistencePort;
 import lombok.AllArgsConstructor;
 import java.util.Optional;

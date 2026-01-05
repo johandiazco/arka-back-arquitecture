@@ -1,7 +1,7 @@
 package com.arkaback.useCase.Inventory;
 
 import com.arkaback.entity.Inventory;
-import com.arkaback.ports.input.GetLowStockProduct;
+import com.arkaback.ports.input.Product.GetLowStockProduct;
 import com.arkaback.ports.output.InventoryPersistencePort;
 import lombok.AllArgsConstructor;
 

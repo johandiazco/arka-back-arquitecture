@@ -1,4 +1,4 @@
-package com.arkaback.ports.input;
+package com.arkaback.ports.input.Product;
 
 import java.util.List;
 

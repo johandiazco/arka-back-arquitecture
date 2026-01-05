@@ -4,12 +4,12 @@ import com.arkaback.dto.InventoryResponse;
 import com.arkaback.dto.StockUpdateRequest;
 import com.arkaback.entity.Inventory;
 import com.arkaback.mapper.InventoryDtoMapper;
-import com.arkaback.ports.input.UpdateStock;
+import com.arkaback.ports.input.Product.UpdateStock;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.arkaback.ports.input.GetLowStockProduct;
+import com.arkaback.ports.input.Product.GetLowStockProduct;
 import java.util.List;
 
 @RestController

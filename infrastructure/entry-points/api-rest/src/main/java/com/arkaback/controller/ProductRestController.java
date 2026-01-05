@@ -5,7 +5,7 @@ import com.arkaback.dto.ProductResponse;
 import com.arkaback.dto.ProductUpdateRequest;
 import com.arkaback.mapper.ProductDtoMapper;
 import com.arkaback.entity.Product;
-import com.arkaback.ports.input.*;
+import com.arkaback.ports.input.Product.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
