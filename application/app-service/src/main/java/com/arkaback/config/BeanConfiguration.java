@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.arkaback")
 public class BeanConfiguration {
 
+    // BEANS PRODUCT
     @Bean
     public CreateProduct createProductUseCase(
             ProductPersistencePort productPersistencePort,
@@ -44,6 +45,7 @@ public class BeanConfiguration {
         return new DeleteProductUseCase(productPersistencePort);
     }
 
+    // BEANS INVENTORY
     @Bean
     public UpdateStock updateStockUseCase(InventoryPersistencePort inventoryPersistencePort) {
         return new UpdateStockUseCase(inventoryPersistencePort);
@@ -54,6 +56,7 @@ public class BeanConfiguration {
         return new GetLowStockProductUseCase(inventoryPersistencePort);
     }
 
+    // BEANS ORDER (HU4, HU5, HU6)
     @Bean
     public CreateOrder createOrderUseCase(
             OrderPersistencePort orderPersistencePort,
@@ -79,6 +82,12 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public GetOrdersByPerson getOrdersByPersonUseCase(OrderPersistencePort orderPersistencePort) {
+        return new GetOrdersByPersonUseCase(orderPersistencePort);
+    }
+
+    // BEANS NOTIFICATION (HU6)
+    @Bean
     public SendNotification sendNotificationUseCase(
             NotificationPersistencePort notificationPersistencePort,
             EmailServicePort emailServicePort) {
@@ -86,7 +95,9 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public GetOrdersByPerson getOrdersByPersonUseCase(OrderPersistencePort orderPersistencePort) {
-        return new GetOrdersByPersonUseCase(orderPersistencePort);
+    public UpdateOrderStatus updateOrderStatusUseCase(
+            OrderPersistencePort orderPersistencePort,
+            SendNotification sendNotification) {
+        return new UpdateOrderStatusUseCase(orderPersistencePort, sendNotification);
     }
 }
