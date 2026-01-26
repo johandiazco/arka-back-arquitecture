@@ -1,4 +1,4 @@
-package com.arkaback.exceptions;
+package com.arkaback.exceptions.domain;
 
 public class InvalidStockException extends RuntimeException {
     public InvalidStockException(String message) {

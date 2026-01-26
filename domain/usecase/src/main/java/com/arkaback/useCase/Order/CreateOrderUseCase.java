@@ -4,7 +4,7 @@ import com.arkaback.entity.Inventory;
 import com.arkaback.entity.Order;
 import com.arkaback.entity.OrderDetail;
 import com.arkaback.entity.OrderStatu;
-import com.arkaback.exceptions.InsufficientStockException;
+import com.arkaback.exceptions.domain.InsufficientStockException;
 import com.arkaback.ports.input.Order.CreateOrder;
 import com.arkaback.ports.output.InventoryPersistencePort;
 import com.arkaback.ports.output.OrderPersistencePort;

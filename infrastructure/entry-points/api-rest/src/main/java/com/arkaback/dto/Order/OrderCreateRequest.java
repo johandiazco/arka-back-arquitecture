@@ -1,4 +1,4 @@
-package com.arkaback.dto;
+package com.arkaback.dto.Order;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

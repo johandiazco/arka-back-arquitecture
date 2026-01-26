@@ -1,6 +1,12 @@
 package com.arkaback.config;
 
 import com.arkaback.exceptions.*;
+import com.arkaback.exceptions.domain.InsufficientStockException;
+import com.arkaback.exceptions.domain.InvalidOrderException;
+import com.arkaback.exceptions.domain.InvalidPriceException;
+import com.arkaback.exceptions.domain.InvalidStockException;
+import com.arkaback.exceptions.infrastructure.InventoryNotFoundException;
+import com.arkaback.exceptions.infrastructure.OrderNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

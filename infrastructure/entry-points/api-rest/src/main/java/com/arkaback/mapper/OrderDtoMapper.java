@@ -1,6 +1,6 @@
 package com.arkaback.mapper;
 
-import com.arkaback.dto.*;
+import com.arkaback.dto.Order.*;
 import com.arkaback.entity.*;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -11,6 +11,29 @@ public class OrderDtoMapper {
 
     //Convierte OrderCreateRequest a Order (dominio)
     public Order toDomain(OrderCreateRequest request) {
+        if (request == null) return null;
+
+        Person person = Person.builder()
+                .id(request.getPersonId())
+                .build();
+
+        Warehouse warehouse = Warehouse.builder()
+                .id(request.getWarehouseId())
+                .build();
+
+        List<OrderDetail> details = request.getDetails().stream()
+                .map(this::detailToDomain)
+                .collect(Collectors.toList());
+
+        return Order.builder()
+                .person(person)
+                .warehouse(warehouse)
+                .details(details)
+                .build();
+    }
+
+    // ✨ NUEVO: Convierte OrderUpdateRequest a Order (dominio)
+    public Order updateToDomain(OrderUpdateRequest request) {
         if (request == null) return null;
 
         Person person = Person.builder()

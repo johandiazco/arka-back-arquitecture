@@ -1,4 +1,4 @@
-package com.arkaback.dto;
+package com.arkaback.dto.Order;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;

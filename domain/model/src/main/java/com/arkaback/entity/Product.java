@@ -1,6 +1,6 @@
 package com.arkaback.entity;
 
-import com.arkaback.exceptions.InvalidPriceException;
+import com.arkaback.exceptions.domain.InvalidPriceException;
 import lombok.*;
 
 import java.math.BigDecimal;

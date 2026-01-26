@@ -1,4 +1,4 @@
-package com.arkaback.exceptions;
+package com.arkaback.exceptions.infrastructure;
 
 public class OrderNotFoundException extends RuntimeException {
     public OrderNotFoundException(String message) {

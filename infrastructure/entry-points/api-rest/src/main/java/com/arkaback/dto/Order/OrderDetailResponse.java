@@ -1,4 +1,4 @@
-package com.arkaback.dto;
+package com.arkaback.dto.Order;
 
 import lombok.*;
 import java.math.BigDecimal;

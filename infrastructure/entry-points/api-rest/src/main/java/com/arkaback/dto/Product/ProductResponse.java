@@ -1,4 +1,4 @@
-package com.arkaback.dto;
+package com.arkaback.dto.Product;
 
 import lombok.*;
 

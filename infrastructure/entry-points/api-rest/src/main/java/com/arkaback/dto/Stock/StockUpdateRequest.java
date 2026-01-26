@@ -1,4 +1,4 @@
-package com.arkaback.dto;
+package com.arkaback.dto.Stock;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

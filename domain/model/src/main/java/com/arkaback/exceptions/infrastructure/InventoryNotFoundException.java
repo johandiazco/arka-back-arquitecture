@@ -1,4 +1,4 @@
-package com.arkaback.exceptions;
+package com.arkaback.exceptions.infrastructure;
 
 public class InventoryNotFoundException extends RuntimeException {
     public InventoryNotFoundException(String message) {

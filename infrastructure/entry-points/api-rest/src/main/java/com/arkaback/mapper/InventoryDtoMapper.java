@@ -1,6 +1,6 @@
 package com.arkaback.mapper;
 
-import com.arkaback.dto.InventoryResponse;
+import com.arkaback.dto.Inventory.InventoryResponse;
 import com.arkaback.entity.Inventory;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.arkaback.controller;
 
-import com.arkaback.dto.InventoryResponse;
-import com.arkaback.dto.StockUpdateRequest;
+import com.arkaback.dto.Inventory.InventoryResponse;
+import com.arkaback.dto.Stock.StockUpdateRequest;
 import com.arkaback.entity.Inventory;
 import com.arkaback.mapper.InventoryDtoMapper;
 import com.arkaback.ports.input.Product.UpdateStock;
