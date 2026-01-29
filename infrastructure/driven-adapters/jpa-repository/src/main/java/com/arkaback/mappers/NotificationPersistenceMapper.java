@@ -1,6 +1,10 @@
 package com.arkaback.mappers;
 
-import com.arkaback.entity.*;
+import com.arkaback.entity.notification.*;
+import com.arkaback.entity.order.Order;
+import com.arkaback.entity.order.OrderEntity;
+import com.arkaback.entity.person.Person;
+import com.arkaback.entity.person.PersonEntity;
 import org.springframework.stereotype.Component;
 
 @Component

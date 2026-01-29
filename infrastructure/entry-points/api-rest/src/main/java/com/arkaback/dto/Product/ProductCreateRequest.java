@@ -1,6 +1,6 @@
 package com.arkaback.dto.Product;
 
-import com.arkaback.entity.Category;
+import com.arkaback.entity.category.Category;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

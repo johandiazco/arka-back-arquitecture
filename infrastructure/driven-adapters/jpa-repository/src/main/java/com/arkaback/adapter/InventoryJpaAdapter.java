@@ -1,6 +1,11 @@
 package com.arkaback.adapter;
 
-import com.arkaback.entity.*;
+import com.arkaback.entity.inventory.Inventory;
+import com.arkaback.entity.inventory.InventoryEntity;
+import com.arkaback.entity.product.Product;
+import com.arkaback.entity.product.ProductEntity;
+import com.arkaback.entity.supplier.SupplierEntity;
+import com.arkaback.entity.warehouse.WarehouseEntity;
 import com.arkaback.mappers.InventoryPersistenceMapper;
 import com.arkaback.ports.output.InventoryPersistencePort;
 import com.arkaback.repository.InventoryJpaRepository;

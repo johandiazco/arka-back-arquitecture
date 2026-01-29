@@ -1,8 +1,8 @@
 package com.arkaback.useCase.Order;
 
-import com.arkaback.entity.Notification;
-import com.arkaback.entity.Order;
-import com.arkaback.entity.OrderStatu;
+import com.arkaback.entity.notification.Notification;
+import com.arkaback.entity.order.Order;
+import com.arkaback.entity.order.OrderStatu;
 import com.arkaback.exceptions.infrastructure.OrderNotFoundException;
 import com.arkaback.ports.input.Notification.SendNotification;
 import com.arkaback.ports.input.Order.UpdateOrderStatus;

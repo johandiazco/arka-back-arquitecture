@@ -1,7 +1,7 @@
 package com.arkaback.adapter;
 
-import com.arkaback.entity.Order;
-import com.arkaback.entity.OrderEntity;
+import com.arkaback.entity.order.Order;
+import com.arkaback.entity.order.OrderEntity;
 import com.arkaback.mappers.OrderPersistenceMapper;
 import com.arkaback.ports.output.OrderPersistencePort;
 import com.arkaback.repository.OrderJpaRepository;

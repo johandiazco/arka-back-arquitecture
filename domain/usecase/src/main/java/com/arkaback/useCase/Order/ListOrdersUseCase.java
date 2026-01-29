@@ -1,6 +1,6 @@
 package com.arkaback.useCase.Order;
 
-import com.arkaback.entity.Order;
+import com.arkaback.entity.order.Order;
 import com.arkaback.ports.input.Order.ListOrders;
 import com.arkaback.ports.output.OrderPersistencePort;
 import lombok.AllArgsConstructor;

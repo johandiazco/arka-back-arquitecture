@@ -2,7 +2,7 @@ package com.arkaback.controller;
 
 import com.arkaback.dto.Inventory.InventoryResponse;
 import com.arkaback.dto.Stock.StockUpdateRequest;
-import com.arkaback.entity.Inventory;
+import com.arkaback.entity.inventory.Inventory;
 import com.arkaback.mapper.InventoryDtoMapper;
 import com.arkaback.ports.input.Product.UpdateStock;
 import jakarta.validation.Valid;

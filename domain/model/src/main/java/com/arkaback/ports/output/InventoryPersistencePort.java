@@ -1,7 +1,7 @@
 package com.arkaback.ports.output;
 
-import com.arkaback.entity.Inventory;
-import com.arkaback.entity.Product;
+import com.arkaback.entity.inventory.Inventory;
+import com.arkaback.entity.product.Product;
 
 import java.util.List;
 import java.util.Optional;

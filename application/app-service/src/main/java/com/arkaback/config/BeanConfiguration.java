@@ -1,14 +1,20 @@
 package com.arkaback.config;
 
+import com.arkaback.ports.input.Cart.*;
 import com.arkaback.ports.input.Notification.SendNotification;
 import com.arkaback.ports.input.Order.*;
 import com.arkaback.ports.input.Product.*;
+import com.arkaback.ports.input.salesReport.ExportSalesReport;
+import com.arkaback.ports.input.salesReport.GenerateWeeklySalesReport;
 import com.arkaback.ports.output.*;
+import com.arkaback.useCase.Cart.*;
 import com.arkaback.useCase.Inventory.GetLowStockProductUseCase;
 import com.arkaback.useCase.Notification.SendNotificationUseCase;
 import com.arkaback.useCase.Order.*;
 import com.arkaback.useCase.Product.*;
 import com.arkaback.useCase.Stock.UpdateStockUseCase;
+import com.arkaback.useCase.salesReport.ExportSalesReportUseCase;
+import com.arkaback.useCase.salesReport.GenerateWeeklySalesReportUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -100,4 +106,74 @@ public class BeanConfiguration {
             SendNotification sendNotification) {
         return new UpdateOrderStatusUseCase(orderPersistencePort, sendNotification);
     }
+
+    // BEANS CART (HU8)
+
+    @Bean
+    public AddProductToCart addProductToCartUseCase(
+            ShoppingCartPersistencePort cartPersistencePort,
+            ProductPersistencePort productPersistencePort,
+            InventoryPersistencePort inventoryPersistencePort) {
+        return new AddProductToCartUseCase(cartPersistencePort, productPersistencePort, inventoryPersistencePort);
+    }
+
+    @Bean
+    public DeleteProductFromCart removeProductFromCartUseCase(
+            ShoppingCartPersistencePort cartPersistencePort) {
+        return new DeleteProductFromCartUseCase(cartPersistencePort);
+    }
+
+    @Bean
+    public GetActiveCart getActiveCartUseCase(
+            ShoppingCartPersistencePort cartPersistencePort) {
+        return new GetActiveCartUseCase(cartPersistencePort);
+    }
+
+    @Bean
+    public UpdateCartItemQuantity updateCartItemQuantityUseCase(
+            ShoppingCartPersistencePort cartPersistencePort,
+            InventoryPersistencePort inventoryPersistencePort) {
+        return new UpdateCartItemQuantityUseCase(cartPersistencePort, inventoryPersistencePort);
+    }
+
+    @Bean
+    public ClearCart clearCartUseCase(
+            ShoppingCartPersistencePort cartPersistencePort) {
+        return new ClearCartUseCase(cartPersistencePort);
+    }
+
+    @Bean
+    public CheckoutCart checkoutCartUseCase(
+            ShoppingCartPersistencePort cartPersistencePort,
+            OrderPersistencePort orderPersistencePort,
+            InventoryPersistencePort inventoryPersistencePort) {
+        return new CheckoutCartUseCase(cartPersistencePort, orderPersistencePort, inventoryPersistencePort);
+    }
+
+    @Bean
+    public GetAbandonedCarts getAbandonedCartsUseCase(
+            ShoppingCartPersistencePort cartPersistencePort) {
+        return new GetAbandonedCartsUseCase(cartPersistencePort);
+    }
+
+    @Bean
+    public SendAbandonedCartReminder sendAbandonedCartReminderUseCase(
+            ShoppingCartPersistencePort cartPersistencePort,
+            EmailServicePort emailServicePort) {
+        return new SendAbandonedCartReminderUseCase(cartPersistencePort, emailServicePort);
+    }
+
+    //BEANS REPORT (HU7)
+
+    @Bean
+    public GenerateWeeklySalesReport generateWeeklySalesReportUseCase(
+            SalesReportPersistencePort salesReportPersistencePort) {
+        return new GenerateWeeklySalesReportUseCase(salesReportPersistencePort);
+    }
+
+    @Bean
+    public ExportSalesReport exportSalesReportUseCase() {
+        return new ExportSalesReportUseCase();
+    }
+
 }

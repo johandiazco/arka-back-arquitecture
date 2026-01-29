@@ -107,4 +107,40 @@ public class GlobalExceptionHandler {
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
+
+    //EXCEPCIONES DE CARRITO
+
+    @ExceptionHandler(com.arkaback.exceptions.infrastructure.CartNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleCartNotFound(
+            com.arkaback.exceptions.infrastructure.CartNotFoundException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", 404);
+        error.put("error", "Not Found");
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(com.arkaback.exceptions.domain.EmptyCartException.class)
+    public ResponseEntity<Map<String, Object>> handleEmptyCart(
+            com.arkaback.exceptions.domain.EmptyCartException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", 400);
+        error.put("error", "Bad Request");
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(com.arkaback.exceptions.infrastructure.ProductNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleProductNotFound(
+            com.arkaback.exceptions.infrastructure.ProductNotFoundException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", 404);
+        error.put("error", "Not Found");
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
 }

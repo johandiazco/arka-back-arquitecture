@@ -1,6 +1,13 @@
 package com.arkaback.mappers;
 
-import com.arkaback.entity.*;
+import com.arkaback.entity.category.Category;
+import com.arkaback.entity.order.*;
+import com.arkaback.entity.person.Person;
+import com.arkaback.entity.person.PersonEntity;
+import com.arkaback.entity.product.Product;
+import com.arkaback.entity.product.ProductEntity;
+import com.arkaback.entity.warehouse.Warehouse;
+import com.arkaback.entity.warehouse.WarehouseEntity;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;

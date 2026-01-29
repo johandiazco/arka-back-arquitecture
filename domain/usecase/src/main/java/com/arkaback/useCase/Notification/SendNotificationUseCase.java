@@ -1,7 +1,7 @@
 package com.arkaback.useCase.Notification;
 
-import com.arkaback.entity.Notification;
-import com.arkaback.entity.NotificationChannel;
+import com.arkaback.entity.notification.Notification;
+import com.arkaback.entity.notification.NotificationChannel;
 import com.arkaback.ports.input.Notification.SendNotification;
 import com.arkaback.ports.output.EmailServicePort;
 import com.arkaback.ports.output.NotificationPersistencePort;

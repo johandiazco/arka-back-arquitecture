@@ -1,9 +1,9 @@
 package com.arkaback.mappers;
 
-import com.arkaback.entity.Category;
-import com.arkaback.entity.CategoryEntity;
-import com.arkaback.entity.Product;
-import com.arkaback.entity.ProductEntity;
+import com.arkaback.entity.category.Category;
+import com.arkaback.entity.category.CategoryEntity;
+import com.arkaback.entity.product.Product;
+import com.arkaback.entity.product.ProductEntity;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,7 +1,7 @@
 package com.arkaback.repository;
 
-import com.arkaback.entity.NotificationEntity;
-import com.arkaback.entity.NotificationStatusEntity;
+import com.arkaback.entity.notification.NotificationEntity;
+import com.arkaback.entity.notification.NotificationStatusEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

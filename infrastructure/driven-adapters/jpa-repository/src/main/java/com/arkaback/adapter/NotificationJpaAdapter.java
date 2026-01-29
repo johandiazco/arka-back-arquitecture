@@ -1,9 +1,9 @@
 package com.arkaback.adapter;
 
-import com.arkaback.entity.Notification;
-import com.arkaback.entity.NotificationEntity;
-import com.arkaback.entity.NotificationStatus;
-import com.arkaback.entity.NotificationStatusEntity;
+import com.arkaback.entity.notification.Notification;
+import com.arkaback.entity.notification.NotificationEntity;
+import com.arkaback.entity.notification.NotificationStatus;
+import com.arkaback.entity.notification.NotificationStatusEntity;
 import com.arkaback.mappers.NotificationPersistenceMapper;
 import com.arkaback.ports.output.NotificationPersistencePort;
 import com.arkaback.repository.NotificationJpaRepository;

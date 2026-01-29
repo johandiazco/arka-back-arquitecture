@@ -1,6 +1,6 @@
 package com.arkaback.useCase.Stock;
 
-import com.arkaback.entity.Inventory;
+import com.arkaback.entity.inventory.Inventory;
 import com.arkaback.exceptions.domain.InvalidStockException;
 import com.arkaback.exceptions.infrastructure.InventoryNotFoundException;
 import com.arkaback.ports.input.Product.UpdateStock;

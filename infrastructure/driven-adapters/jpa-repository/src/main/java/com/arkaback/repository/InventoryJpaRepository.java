@@ -1,6 +1,6 @@
 package com.arkaback.repository;
 
-import com.arkaback.entity.InventoryEntity;
+import com.arkaback.entity.inventory.InventoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

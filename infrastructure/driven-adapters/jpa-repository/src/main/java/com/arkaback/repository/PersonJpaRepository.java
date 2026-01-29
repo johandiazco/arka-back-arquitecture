@@ -1,6 +1,6 @@
 package com.arkaback.repository;
 
-import com.arkaback.entity.PersonEntity;
+import com.arkaback.entity.person.PersonEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

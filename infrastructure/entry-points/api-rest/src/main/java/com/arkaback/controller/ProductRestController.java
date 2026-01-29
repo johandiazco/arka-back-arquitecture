@@ -4,7 +4,7 @@ import com.arkaback.dto.Product.ProductCreateRequest;
 import com.arkaback.dto.Product.ProductResponse;
 import com.arkaback.dto.Product.ProductUpdateRequest;
 import com.arkaback.mapper.ProductDtoMapper;
-import com.arkaback.entity.Product;
+import com.arkaback.entity.product.Product;
 import com.arkaback.ports.input.Product.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,9 @@
 package com.arkaback.useCase.Order;
 
-import com.arkaback.entity.*;
+import com.arkaback.entity.inventory.Inventory;
+import com.arkaback.entity.order.Order;
+import com.arkaback.entity.order.OrderDetail;
+import com.arkaback.entity.order.OrderStatu;
 import com.arkaback.exceptions.domain.InsufficientStockException;
 import com.arkaback.exceptions.domain.InvalidOrderException;
 import com.arkaback.exceptions.infrastructure.OrderNotFoundException;

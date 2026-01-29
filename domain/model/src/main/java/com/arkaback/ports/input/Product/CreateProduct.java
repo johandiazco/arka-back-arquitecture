@@ -1,6 +1,6 @@
 package com.arkaback.ports.input.Product;
 
-import com.arkaback.entity.Product;
+import com.arkaback.entity.product.Product;
 
 public interface CreateProduct {
 
