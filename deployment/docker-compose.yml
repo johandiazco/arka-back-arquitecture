@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # BASE DE DATOS MYSQL
+  mysql:
+    image: mysql:8.0
+    container_name: arka-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: arka_db
+      MYSQL_USER: arkauser
+      MYSQL_PASSWORD: arkapass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - arka-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # BACKEND SPRING BOOT
+  backend:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    container_name: arka-backend
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # Configuración de BD
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/arka_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+      # JWT
+      JWT_SECRET: mi-secreto-super-seguro-para-jwt-123456
+      JWT_EXPIRATION: 86400000  # 24 horas en milisegundos
+
+      # Email
+      EMAIL_USERNAME: ${EMAIL_USERNAME:-tu-email@gmail.com}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD:-tu-password-app}
+
+      # Perfil de Spring
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    networks:
+      - arka-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+
+# VOLUMES (Persistencia)
+volumes:
+  mysql-data:
+    driver: local
+
+
+# NETWORKS
+networks:
+  arka-network:
+    driver: bridge   driver: bridge
