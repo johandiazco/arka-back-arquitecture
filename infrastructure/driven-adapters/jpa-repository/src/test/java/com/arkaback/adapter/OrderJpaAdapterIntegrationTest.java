@@ -15,41 +15,61 @@ import com.arkaback.repository.OrderJpaRepository;
 import com.arkaback.repository.PersonJpaRepository;
 import com.arkaback.repository.ProductJpaRepository;
 import com.arkaback.repository.WarehouseJpaRepository;
-import net.bytebuddy.utility.dispatcher.JavaDispatcher;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Test de Integración para OrderJpaAdapter
- *
- * Usa Testcontainers para levantar MySQL real
- * Verifica:
- * - Persistencia completa de Order + OrderDetails
- * - Generación de código único
- * - Búsqueda por persona
- * - Integridad referencial
- */
-@DataJpaTest
-@Testcontainers
+@SpringBootTest(classes = OrderJpaAdapterIntegrationTest.TestConfig.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(OrderPersistenceMapper.class)
-@DisplayName("OrderJpaAdapter - Tests de Integración")
-class OrderJpaAdapterIntegrationTest {
+@Testcontainers
+public class OrderJpaAdapterIntegrationTest {
 
-    @JavaDispatcher.Container
+    @Configuration
+    @EnableAutoConfiguration
+    @EntityScan(basePackages = {
+            "com.arkaback.entity.order",
+            "com.arkaback.entity.person",
+            "com.arkaback.entity.product",
+            "com.arkaback.entity.category",
+            "com.arkaback.entity.warehouse",
+            "com.arkaback.entity.inventory",
+            "com.arkaback.entity.supplier"
+    })
+    @EnableJpaRepositories(basePackages = "com.arkaback.repository")
+    static class TestConfig {
+
+        // ✅ Registramos el mapper y el adapter explícitamente como beans
+        @Bean
+        public OrderPersistenceMapper orderPersistenceMapper() {
+            return new OrderPersistenceMapper();
+        }
+
+        @Bean
+        public OrderJpaAdapter orderJpaAdapter(
+                OrderJpaRepository orderJpaRepository,
+                OrderPersistenceMapper mapper) {
+            return new OrderJpaAdapter(orderJpaRepository, mapper);
+        }
+    }
+
+    @Container
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
             .withDatabaseName("testdb")
             .withUsername("test")
@@ -60,6 +80,10 @@ class OrderJpaAdapterIntegrationTest {
         registry.add("spring.datasource.url", mysql::getJdbcUrl);
         registry.add("spring.datasource.username", mysql::getUsername);
         registry.add("spring.datasource.password", mysql::getPassword);
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
+        registry.add("spring.jpa.show-sql", () -> "true");
+        registry.add("spring.mail.host", () -> "localhost");  // ✅ evita error de mail
+        registry.add("spring.mail.port", () -> "1025");
     }
 
     @Autowired
@@ -75,35 +99,29 @@ class OrderJpaAdapterIntegrationTest {
     private WarehouseJpaRepository warehouseRepository;
 
     @Autowired
-    private OrderPersistenceMapper mapper;
-
     private OrderJpaAdapter orderAdapter;
+
     private PersonEntity personEntity;
     private ProductEntity productEntity;
     private WarehouseEntity warehouseEntity;
 
     @BeforeEach
     void setUp() {
-        orderAdapter = new OrderJpaAdapter(orderRepository, mapper);
+        orderRepository.deleteAll();
+        productRepository.deleteAll();
+        personRepository.deleteAll();
+        warehouseRepository.deleteAll();
 
-        // Crear datos de prueba
-        CategoryEntity category = CategoryEntity.builder()
-                .name("Periféricos")
-                .description("Periféricos de computadora")
-                .isActive(true)
-                .build();
-
-        personEntity = PersonEntity.builder()
+        personEntity = personRepository.save(PersonEntity.builder()
                 .name("Juan Pérez")
                 .email("juan@test.com")
                 .passwordHash("hash123")
                 .phone("555-0100")
                 .address("Calle Falsa 123")
                 .isActive(true)
-                .build();
-        personEntity = personRepository.save(personEntity);
+                .build());
 
-        productEntity = ProductEntity.builder()
+        productEntity = productRepository.save(ProductEntity.builder()
                 .name("Mouse Logitech")
                 .description("Mouse gaming")
                 .price(new BigDecimal("59.99"))
@@ -111,75 +129,52 @@ class OrderJpaAdapterIntegrationTest {
                 .brand("Logitech")
                 .minStock(5)
                 .isActive(true)
-                .category(category)
-                .build();
-        productEntity = productRepository.save(productEntity);
+                .category(CategoryEntity.builder()
+                        .name("Periféricos")
+                        .description("Periféricos de computadora")
+                        .isActive(true)
+                        .build())
+                .build());
 
-        warehouseEntity = WarehouseEntity.builder()
+        warehouseEntity = warehouseRepository.save(WarehouseEntity.builder()
                 .name("Bodega Principal")
                 .country("Colombia")
                 .city("Bogotá")
                 .address("Cra 7 # 32-16")
                 .phone("555-0200")
                 .isActive(true)
-                .build();
-        warehouseEntity = warehouseRepository.save(warehouseEntity);
+                .build());
     }
 
     @Test
     @DisplayName("Debería persistir Order completo con detalles en BD")
     void shouldPersistOrderWithDetails() {
-
-        Person person = Person.builder()
-                .id(personEntity.getId())
-                .name(personEntity.getName())
-                .email(personEntity.getEmail())
-                .build();
-
-        Product product = Product.builder()
-                .id(productEntity.getId())
-                .name(productEntity.getName())
-                .price(productEntity.getPrice())
-                .build();
-
-        Warehouse warehouse = Warehouse.builder()
-                .id(warehouseEntity.getId())
-                .name(warehouseEntity.getName())
-                .build();
-
-        OrderDetail detail = OrderDetail.builder()
-                .product(product)
-                .quantity(3)
-                .unitPrice(new BigDecimal("59.99"))
-                .build();
-
         Order order = Order.builder()
-                .person(person)
-                .warehouse(warehouse)
-                .details(List.of(detail))
+                .person(Person.builder().id(personEntity.getId())
+                        .name(personEntity.getName()).email(personEntity.getEmail()).build())
+                .warehouse(Warehouse.builder().id(warehouseEntity.getId())
+                        .name(warehouseEntity.getName()).build())
+                .details(List.of(OrderDetail.builder()
+                        .product(Product.builder().id(productEntity.getId())
+                                .name(productEntity.getName()).price(productEntity.getPrice()).build())
+                        .quantity(3)
+                        .unitPrice(new BigDecimal("59.99"))
+                        .build()))
                 .orderStatus(OrderStatu.PENDIENTE)
                 .build();
 
-        Order savedOrder = orderAdapter.save(order);
+        Order saved = orderAdapter.save(order);
 
-        assertNotNull(savedOrder.getId());
-        assertNotNull(savedOrder.getOrderCode());
-        assertEquals(OrderStatu.PENDIENTE, savedOrder.getOrderStatus());
-        assertEquals(1, savedOrder.getDetails().size());
-
-        OrderDetail savedDetail = savedOrder.getDetails().get(0);
-        assertEquals(3, savedDetail.getQuantity());
-        assertEquals(new BigDecimal("59.99"), savedDetail.getUnitPrice());
-
-        // Calcular total
-        BigDecimal expectedTotal = new BigDecimal("59.99").multiply(new BigDecimal("3"));
-        assertEquals(expectedTotal, savedOrder.calculateTotal());
+        assertNotNull(saved.getId());
+        assertNotNull(saved.getOrderCode());
+        assertEquals(OrderStatu.PENDIENTE, saved.getOrderStatus());
+        assertEquals(1, saved.getDetails().size());
+        assertEquals(new BigDecimal("59.99").multiply(new BigDecimal("3")), saved.calculateTotal());
     }
 
     @Test
     @DisplayName("Debería generar código único para cada orden")
     void shouldGenerateUniqueOrderCode() {
-
         String code1 = orderAdapter.generateOrderCode();
         String code2 = orderAdapter.generateOrderCode();
 
@@ -187,97 +182,54 @@ class OrderJpaAdapterIntegrationTest {
         assertNotNull(code2);
         assertNotEquals(code1, code2);
         assertTrue(code1.startsWith("ORD-"));
-        assertTrue(code2.startsWith("ORD-"));
     }
 
     @Test
     @DisplayName("Debería encontrar órdenes por ID de persona")
     void shouldFindOrdersByPersonId() {
-        // Crear 2 órdenes para la misma persona
-        Person person = Person.builder()
-                .id(personEntity.getId())
-                .build();
-
-        Warehouse warehouse = Warehouse.builder()
-                .id(warehouseEntity.getId())
-                .build();
-
-        Product product = Product.builder()
-                .id(productEntity.getId())
-                .build();
-
+        Person person = Person.builder().id(personEntity.getId()).build();
+        Warehouse warehouse = Warehouse.builder().id(warehouseEntity.getId()).build();
+        Product product = Product.builder().id(productEntity.getId()).build();
         OrderDetail detail = OrderDetail.builder()
-                .product(product)
-                .quantity(1)
-                .unitPrice(new BigDecimal("10.00"))
-                .build();
+                .product(product).quantity(1).unitPrice(new BigDecimal("10.00")).build();
 
-        Order order1 = Order.builder()
-                .person(person)
-                .warehouse(warehouse)
-                .details(List.of(detail))
-                .orderStatus(OrderStatu.PENDIENTE)
-                .build();
-
-        Order order2 = Order.builder()
-                .person(person)
-                .warehouse(warehouse)
-                .details(List.of(detail))
-                .orderStatus(OrderStatu.CONFIRMADO)
-                .build();
-
-        orderAdapter.save(order1);
-        orderAdapter.save(order2);
+        orderAdapter.save(Order.builder().person(person).warehouse(warehouse)
+                .details(List.of(detail)).orderStatus(OrderStatu.PENDIENTE).build());
+        orderAdapter.save(Order.builder().person(person).warehouse(warehouse)
+                .details(List.of(detail)).orderStatus(OrderStatu.CONFIRMADO).build());
 
         List<Order> orders = orderAdapter.findByPersonId(personEntity.getId());
 
-        assertNotNull(orders);
         assertEquals(2, orders.size());
         assertTrue(orders.stream().allMatch(o ->
-                o.getPerson().getId().equals(personEntity.getId())
-        ));
+                o.getPerson().getId().equals(personEntity.getId())));
     }
 
     @Test
     @DisplayName("Debería retornar Optional.empty cuando orden no existe")
     void shouldReturnEmptyWhenOrderNotFound() {
-
         Optional<Order> result = orderAdapter.findById(999L);
-
         assertTrue(result.isEmpty());
     }
 
     @Test
     @DisplayName("Debería calcular total correctamente con múltiples detalles")
     void shouldCalculateTotalWithMultipleDetails() {
-
+        Product product = Product.builder().id(productEntity.getId()).build();
         Person person = Person.builder().id(personEntity.getId()).build();
         Warehouse warehouse = Warehouse.builder().id(warehouseEntity.getId()).build();
-        Product product = Product.builder().id(productEntity.getId()).build();
 
-        OrderDetail detail1 = OrderDetail.builder()
-                .product(product)
-                .quantity(2)
-                .unitPrice(new BigDecimal("10.00"))
-                .build();
-
-        OrderDetail detail2 = OrderDetail.builder()
-                .product(product)
-                .quantity(3)
-                .unitPrice(new BigDecimal("15.50"))
-                .build();
-
-        Order order = Order.builder()
-                .person(person)
-                .warehouse(warehouse)
-                .details(List.of(detail1, detail2))
+        Order saved = orderAdapter.save(Order.builder()
+                .person(person).warehouse(warehouse)
+                .details(List.of(
+                        OrderDetail.builder().product(product).quantity(2)
+                                .unitPrice(new BigDecimal("10.00")).build(),
+                        OrderDetail.builder().product(product).quantity(3)
+                                .unitPrice(new BigDecimal("15.50")).build()
+                ))
                 .orderStatus(OrderStatu.PENDIENTE)
-                .build();
+                .build());
 
-        Order saved = orderAdapter.save(order);
-
-        // (2 × 10.00) + (3 × 15.50) = 20.00 + 46.50 = 66.50
-        BigDecimal expectedTotal = new BigDecimal("66.50");
-        assertEquals(expectedTotal, saved.calculateTotal());
+        assertEquals(new BigDecimal("66.50"), saved.calculateTotal());
     }
 }

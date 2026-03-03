@@ -1,7 +1,7 @@
 package com.arkaback.controller;
 
-import com.arkaback.entity.person.PersonEntity;
-import com.arkaback.repository.PersonJpaRepository;
+import com.arkaback.entity.person.Person;
+import com.arkaback.ports.output.PersonRepository;
 import com.arkaback.security.JwtService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -16,50 +16,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Controller de Autenticación JWT
- *
- * Endpoints:
- * - POST /api/auth/login - Iniciar sesión
- * - POST /api/auth/register - Registrar nuevo usuario
- */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthController {
 
     private final JwtService jwtService;
-    private final PersonJpaRepository personRepository;
+    private final PersonRepository personRepository;
     private final PasswordEncoder passwordEncoder;
 
-    /**
-     * Login - Retorna JWT token
-     *
-     * POST /api/auth/login
-     * {
-     *   "email": "admin@arka.com",
-     *   "password": "admin123"
-     * }
-     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
 
-        // Buscar usuario por email
-        PersonEntity person = personRepository.findByEmail(request.getEmail())
+        Person person = personRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Verificar contraseña
         if (!passwordEncoder.matches(request.getPassword(), person.getPasswordHash())) {
             throw new RuntimeException("Contraseña incorrecta");
         }
 
-        // Generar token JWT
-        String token = jwtService.generateToken(
-                person.getEmail(),
-                "CLIENT" // TODO: Obtener de person.getTipoPersona() cuando esté implementado
-        );
+        String token = jwtService.generateToken(person.getEmail(), "CLIENT");
 
-        // Retornar respuesta
         return ResponseEntity.ok(LoginResponse.builder()
                 .token(token)
                 .email(person.getEmail())
@@ -69,28 +46,14 @@ public class AuthController {
                 .build());
     }
 
-    /**
-     * Register - Crea nuevo usuario
-     *
-     * POST /api/auth/register
-     * {
-     *   "name": "Juan Pérez",
-     *   "email": "juan@example.com",
-     *   "password": "password123",
-     *   "phone": "555-0100",
-     *   "address": "Calle 123"
-     * }
-     */
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
 
-        // Verificar si email ya existe
         if (personRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("El email ya está registrado");
         }
 
-        // Crear nuevo usuario
-        PersonEntity person = PersonEntity.builder()
+        Person person = Person.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
@@ -99,9 +62,8 @@ public class AuthController {
                 .isActive(true)
                 .build();
 
-        PersonEntity saved = personRepository.save(person);
+        Person saved = personRepository.save(person);
 
-        // Retornar respuesta
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(RegisterResponse.builder()
                         .id(saved.getId())
@@ -110,8 +72,6 @@ public class AuthController {
                         .message("Usuario registrado exitosamente")
                         .build());
     }
-
-    // ==================== DTOs ====================
 
     @Data
     public static class LoginRequest {
@@ -124,8 +84,7 @@ public class AuthController {
         private String password;
     }
 
-    @Data
-    @Builder
+    @Data @Builder
     public static class LoginResponse {
         private String token;
         private String email;
@@ -136,24 +95,14 @@ public class AuthController {
 
     @Data
     public static class RegisterRequest {
-        @NotBlank(message = "El nombre es obligatorio")
-        private String name;
-
-        @NotBlank(message = "El email es obligatorio")
-        @Email(message = "Formato de email inválido")
-        private String email;
-
-        @NotBlank(message = "La contraseña es obligatoria")
-        @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
-        private String password;
-
+        @NotBlank private String name;
+        @NotBlank @Email private String email;
+        @NotBlank @Size(min = 6) private String password;
         private String phone;
         private String address;
     }
 
-    @Data
-    @Builder
-    @AllArgsConstructor
+    @Data @Builder @AllArgsConstructor
     public static class RegisterResponse {
         private Long id;
         private String name;
