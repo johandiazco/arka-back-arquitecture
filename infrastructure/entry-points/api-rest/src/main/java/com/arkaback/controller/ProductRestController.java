@@ -69,7 +69,3 @@ public class ProductRestController {
     }
 }
 
-    /*
-    GET /api/products?category={id}&brand={name} - Búsqueda con filtros
-     */
-

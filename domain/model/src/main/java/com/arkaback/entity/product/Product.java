@@ -3,12 +3,11 @@ package com.arkaback.entity.product;
 import com.arkaback.entity.category.Category;
 import com.arkaback.exceptions.domain.InvalidPriceException;
 import lombok.*;
-
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {

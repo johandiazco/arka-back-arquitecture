@@ -9,4 +9,18 @@ dependencies {
     implementation project(":model")
     implementation ("org.springframework.boot:spring-boot-starter-mail")
 
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+    testImplementation 'org.testcontainers:testcontainers:1.19.3'
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.3'
+    testImplementation 'org.testcontainers:mysql:1.19.3'
+
+    runtimeOnly 'com.mysql:mysql-connector-j:8.0.33'
+
+}
+
+test {
+    useJUnitPlatform()
 }

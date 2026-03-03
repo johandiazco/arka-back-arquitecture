@@ -27,7 +27,7 @@ services:
   # BACKEND SPRING BOOT
   backend:
     build:
-      context: .
+      context: ..
       dockerfile: deployment/Dockerfile
     container_name: arka-backend
     restart: always
@@ -42,7 +42,7 @@ services:
 
       # JWT
       JWT_SECRET: mi-secreto-super-seguro-para-jwt-123456
-      JWT_EXPIRATION: 86400000  # 24 horas en milisegundos
+      JWT_EXPIRATION: 86400000
 
       # Email
       EMAIL_USERNAME: ${EMAIL_USERNAME:-tu-email@gmail.com}
@@ -61,14 +61,12 @@ services:
       retries: 3
       start_period: 40s
 
-
 # VOLUMES (Persistencia)
 volumes:
   mysql-data:
     driver: local
 
-
 # NETWORKS
 networks:
   arka-network:
-    driver: bridge   driver: bridge
+    driver: bridge
