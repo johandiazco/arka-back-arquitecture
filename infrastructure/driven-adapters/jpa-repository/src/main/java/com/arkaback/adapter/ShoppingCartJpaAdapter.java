@@ -108,11 +108,9 @@ public class ShoppingCartJpaAdapter implements ShoppingCartPersistencePort {
     @Override
     @Transactional
     public CartItem addCartItem(CartItem item) {
-        // Buscar el carrito
         ShoppingCartEntity cart = cartRepository.findById(item.getShoppingCart().getId())
                 .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
 
-        // Crear CartItemEntity
         CartItemEntity itemEntity = CartItemEntity.builder()
                 .shoppingCart(cart)
                 .product(ProductEntity.builder().id(item.getProduct().getId()).build())
@@ -122,17 +120,14 @@ public class ShoppingCartJpaAdapter implements ShoppingCartPersistencePort {
                 .updatedAt(LocalDateTime.now())
                 .build();
 
-        CartItemEntity saved = cartItemRepository.save(itemEntity);
+        cartItemRepository.save(itemEntity);
 
-        // Actualizar ultima actividad del carrito
+        cartRepository.flush();
+
         cart.setLastActivity(LocalDateTime.now());
         cartRepository.save(cart);
 
-        return mapper.toDomain(cartRepository.findById(cart.getId()).get())
-                .getItems().stream()
-                .filter(i -> i.getId().equals(saved.getId()))
-                .findFirst()
-                .orElse(null);
+        return item;
     }
 
     @Override

@@ -50,12 +50,12 @@ public class OrderJpaAdapterIntegrationTest {
             "com.arkaback.entity.category",
             "com.arkaback.entity.warehouse",
             "com.arkaback.entity.inventory",
-            "com.arkaback.entity.supplier"
+            "com.arkaback.entity.supplier",
+            "com.arkaback.entity.cart",
+            "com.arkaback.entity.notification"
     })
     @EnableJpaRepositories(basePackages = "com.arkaback.repository")
     static class TestConfig {
-
-        // ✅ Registramos el mapper y el adapter explícitamente como beans
         @Bean
         public OrderPersistenceMapper orderPersistenceMapper() {
             return new OrderPersistenceMapper();
@@ -82,8 +82,9 @@ public class OrderJpaAdapterIntegrationTest {
         registry.add("spring.datasource.password", mysql::getPassword);
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
         registry.add("spring.jpa.show-sql", () -> "true");
-        registry.add("spring.mail.host", () -> "localhost");  // ✅ evita error de mail
+        registry.add("spring.mail.host", () -> "localhost");
         registry.add("spring.mail.port", () -> "1025");
+        registry.add("spring.jpa.mapping-resources", () -> "");
     }
 
     @Autowired

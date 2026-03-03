@@ -40,7 +40,7 @@ public class ShoppingCartEntity {
     @Column(name = "last_activity", nullable = false)
     private LocalDateTime lastActivity;
 
-    @Column(name = "total_amount", precision = 14, scale = 2)
+    @Transient
     @Builder.Default
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
